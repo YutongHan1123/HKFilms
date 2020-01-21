@@ -10,7 +10,7 @@ d3.csv("./data/01.csv", function(data) {
      d.year1 = +d.year;
      d.year = parseTime(d.year);
      d.import = +d.import;
-     console.log(d.import);
+     // console.log(d.import);
    })
 
 
