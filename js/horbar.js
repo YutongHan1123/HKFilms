@@ -1,6 +1,6 @@
-var margin2 = {top: 80, right: window.innerWidth*0.2, bottom: 20, left: window.innerWidth*0.2};
-var width2 = window.innerWidth - margin2.left - margin2.right; // Use the window's width
-var height = window.innerHeight/3 - margin2.top - margin2.bottom; // Use the window's height
+var margin01 = {top: 100, right: window.innerWidth*0.2, bottom: 20, left: window.innerWidth*0.2};
+var width01 = window.innerWidth - margin01.left - margin01.right; // Use the window's width
+var height01 = window.innerHeight/2.5 - margin01.top - margin01.bottom; // Use the window's height
 
 
 d3.csv("./data/1992cat.csv", function(data) {
@@ -11,18 +11,18 @@ d3.csv("./data/1992cat.csv", function(data) {
    })
 
 var y = d3.scaleBand()
-         .range([height, 0])
+         .range([height01, 0])
          .padding(0.1);
 
 var x = d3.scaleLinear()
-         .range([0, width2]);
+         .range([0, width01]);
 
-var svg2 = d3.select("#cat")
+var svg01 = d3.select("#cat")
         .append("svg")
-        .attr("width", width2 + margin2.left + margin2.right)
-        .attr("height", height + margin2.top + margin2.bottom)
+        .attr("width", width01 + margin01.left + margin01.right)
+        .attr("height", height01 + margin01.top + margin01.bottom)
         .append("g")
-        .attr("transform", "translate(" + margin2.left + "," + margin2.top + ")");
+        .attr("transform", "translate(" + margin01.left + "," + margin01.top + ")");
 
   x.domain([0, d3.max(data, function(d){ return d.number; })])
     y.domain(data.map(function(d) { return d.category; }));
@@ -31,7 +31,7 @@ var div = d3.select("body").append("div")
             .attr("class", "tooltip")
             .style("opacity", 0);
 
-  svg2.selectAll(".bar")
+  svg01.selectAll(".bar")
         .data(data)
       .enter().append("rect")
         .attr("class", "bar")
@@ -40,14 +40,14 @@ var div = d3.select("body").append("div")
         .attr("y", function(d) { return y(d.category); })
         .attr("height", y.bandwidth());
 //axis
-svg2.append("g")
-      .attr("transform", "translate(0," + height + ")")
+svg01.append("g")
+      .attr("transform", "translate(0," + height01 + ")")
       .call(d3.axisBottom(x));
-svg2.append("g")
+svg01.append("g")
       .call(d3.axisLeft(y));
 
 //title
-svg2.append("text")
+svg01.append("text")
   .attr("x", window.innerWidth*0.08)
   .attr("y", window.innerHeight*-0.05)
   .text("The Type of Top 10 Box Office Movies in HK in 1992")
@@ -58,7 +58,7 @@ svg2.append("text")
   .attr("alignment-baseline","middle");
 
 //year
-svg2.append("text")
+svg01.append("text")
   .attr("x", window.innerWidth*0.25)
   .attr("y", window.innerHeight*-0.01)
   .text("1992")

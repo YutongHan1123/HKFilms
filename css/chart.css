@@ -1,3 +1,19 @@
+/* donut */
+.domain {
+        display: none;
+      }
+      .legendCells text {
+        fill: #8E8883;
+        font-size: 28pt;
+        font-family: sans-serif;
+      }
+      .legend-label {
+        fill: #635F5D;
+        font-size: 50pt;
+        font-family: sans-serif;
+      }
+
+/* bar */
 .bar { fill: #667057; }
 
 .axisgrey line{
@@ -17,6 +33,18 @@
 .data-line {
         fill: none;
         stroke: #667057;
+        stroke-width: 2px;
+      }
+
+.data-line1 {
+        fill: none;
+        stroke: #878787;
+        stroke-width: 0.5px;
+      }
+
+.data-line2 {
+        fill: none;
+        stroke: #DA3B26;
         stroke-width: 2px;
       }
 

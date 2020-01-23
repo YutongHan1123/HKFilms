@@ -1,4 +1,4 @@
-var margin1 = {top: 20, right: 100, bottom: 20, left: 100};
+var margin1 = {top: 100, right: innerWidth*0.1, bottom: 20, left: innerWidth*0.1};
 var width1 = window.innerWidth - margin1.left - margin1.right;
 var height = window.innerHeight/2 - margin1.top - margin1.bottom;
 
@@ -12,9 +12,6 @@ d3.csv("./data/01.csv", function(data) {
      d.import = +d.import;
      // console.log(d.import);
    })
-
-
-var n = 21;
 
 var xScale = d3.scaleTime()
 .domain(d3.extent(data, function(d) { return d.year; }))
@@ -30,7 +27,7 @@ var line = d3.line()
     .x(function(d) { return xScale(d.year); })
     .y(function(d) { return yScale(d.import); });
 
-var svg = d3.select("#cow")
+var svg = d3.select("#line")
         .append("svg")
         .attr("width", width1 + margin1.left + margin1.right)
         .attr("height", height + margin1.top + margin1.bottom)
@@ -65,12 +62,12 @@ var fixeddot = svg.selectAll("dot")
     .attr("fill", "#667057");
 
 fixeddot.attr("cx", function (d) {
-      if (d.import > 0) {
+      if (d.import != undefined && d.import != 0) {
         return xScale(d.year);
       }
     })
     .attr("cy", function (d) {
-      if (d.import > 0) {
+      if (d.import != undefined && d.import != 0) {
         return yScale(d.import);
       }
     })
@@ -101,7 +98,7 @@ fixeddot.attr("cx", function (d) {
 //title
 svg.append("text")
   .attr("x", window.innerWidth*0.14)
-  .attr("y", window.innerHeight*0.01)
+  .attr("y", -window.innerHeight*0.05)
   .text("The Change of Numbers of the Countries that Imported HK Films")
   .style("font-size", "33px")
   .style("font-family", "'Reenie Beanie', cursive")
@@ -120,70 +117,4 @@ svg.append("text")
    .style("fill", "#878787")
    .attr("alignment-baseline","middle");
 
-
- //typical year
- const annotations = [{
-            note: { label: "Sino-Japanese War", wrap: 120 },
-            subject: {
-              y1: margin1.top*13 ,
-              y2: height + margin1.bottom
-            },
-            y: margin1.top*13,
-            data: { x: "1896"} //position the x based on an x scale
-          },
-          {
-            note: { label: "Russo-Japanese War", wrap: 120 },
-            subject: {
-              y1: margin1.top*8,
-              y2: height + margin1.bottom
-            },
-            y: margin1.top*8,
-            data: { x: "1906"}
-          },
-          {
-            note: { label: "Xinhai Revolution", wrap: 120},
-            subject: {
-              y1: margin1.top*7,
-              y2: height + margin1.bottom
-            },
-            y: margin1.top*7,
-            data: { x: "1913"}
-          },
-          {
-            note: { label: "May 4th Movement", wrap: 150},
-            subject: {
-              y1: margin1.top*4,
-              y2: height + margin1.bottom
-            },
-            y: margin1.top*4,
-            data: { x: "1921"}
-          }
-
-          ]
-
-const type = d3.annotationCustomType(
-            d3.annotationXYThreshold,
-            {"note":{
-                "lineType":"none",
-                "orientation": "top",
-                "align":"middle"}
-            }
-          )
-
-          const makeAnnotations = d3.annotation()
-            .type(type)
-            //Gives you access to any data objects in the annotations array
-            .accessors({
-              x: function(d){ return xScale(new Date(d.x))},
-              y: function(d){ return yScale(d.y) }
-            })
-            .annotations(annotations)
-            .textWrap(40)
-
-          d3.select("svg")
-            .append("g")
-            .attr("class", "annotation-group")
-            .call(makeAnnotations)
-            .style("font-family", "'Mansalva', cursive")
-            .style("font-weight", "lighter");
  })
